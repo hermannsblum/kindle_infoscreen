@@ -3,7 +3,7 @@
     <div class="full-control">
       <md-list>
         <md-list-item>
-          <md-icon>movie_creation</md-icon>
+          <md-icon>local_movies</md-icon>
           <span class="md-list-item-text">Beamer</span>
           <md-switch v-model="beamer" />
         </md-list-item>

@@ -15,5 +15,3 @@ selenium-debug.log
 *.njsproj
 *.sln
 
-# ignore build directory
-build/

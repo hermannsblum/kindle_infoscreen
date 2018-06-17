@@ -1,0 +1,53 @@
+<template>
+  <md-card>
+    <md-list>
+      <md-list-item>
+        <span class="md-list-item-text">Papiersammlung: {{papierDatum}}</span>
+      </md-list-item>
+    </md-list>
+  </md-card>
+</template>
+
+<script>
+import axios from 'axios';
+
+const ZhAbfallAPI = axios.create({
+  //baseURL: '/erz/api/calendar',
+  baseURL: 'https://cors-anywhere.herokuapp.com/openerz.herokuapp.com/api/calendar/',
+  headers: {
+    origin: window.location.protocol + '//' + window.location.host,
+  }
+});
+
+function daysFromNow(dateStr){
+  const abfallDate = new Date(dateStr)
+  var timeDiff = Math.abs(abfallDate.getTime() - Date.now());
+  var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+  if (diffDays < 1) return 'heute'
+  else if (diffDays < 2) return 'morgen'
+  else return `in ${diffDays} Tagen`
+}
+
+export default {
+  name: 'panel',
+  data() {
+    return {
+      papierDatum: '',
+    };
+  },
+  created() {
+    this.get_date('paper');
+  },
+  methods: {
+    get_date(entity) {
+      const today = new Date(Date.now());
+      ZhAbfallAPI.get(`/${entity}.json?zip=8046&start=${today.toISOString().substring(0,9)}&offset=0&limit=1`).then((response) => {
+        this.papierDatum = daysFromNow(response.data.result[0].date);
+      }).catch((error) => { console.log(error); });
+    },
+  },
+};
+</script>
+
+<style>
+</style>

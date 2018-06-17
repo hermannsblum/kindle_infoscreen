@@ -9,6 +9,7 @@
           <listcard title="Keller" :items="keller" />
         </div>
       </div>
+      <abfall />
       <controlpanel />
     </div>
 
@@ -19,7 +20,9 @@
 import axios from 'axios';
 
 import listcard from './components/listcard';
+import abfall from './components/abfall';
 import controlpanel from './components/controlpanel';
+
 
 const wunderlistAPI = axios.create({
   baseURL: 'https://a.wunderlist.com/api/v1',
@@ -33,6 +36,7 @@ export default {
   name: 'app',
   components: {
     listcard,
+    abfall,
     controlpanel,
   },
   data() {

@@ -2,7 +2,10 @@
   <md-card>
     <md-list>
       <md-list-item>
-        <span class="md-list-item-text">Papiersammlung: {{papierDatum}}</span>
+        <span class="md-list-item-text">Papiersammlung: {{paper}}</span>
+      </md-list-item>
+      <md-list-item>
+        <span class="md-list-item-text">Kartonsammlung: {{cardboard}}</span>
       </md-list-item>
     </md-list>
   </md-card>
@@ -32,17 +35,19 @@ export default {
   name: 'panel',
   data() {
     return {
-      papierDatum: '',
+      paper: '',
+      cardboard: '',
     };
   },
   created() {
     this.get_date('paper');
+    this.get_date('cardboard')
   },
   methods: {
     get_date(entity) {
       const today = new Date(Date.now());
       ZhAbfallAPI.get(`/${entity}.json?zip=8046&start=${today.toISOString().substring(0,9)}&offset=0&limit=1`).then((response) => {
-        this.papierDatum = daysFromNow(response.data.result[0].date);
+        this[entity] = daysFromNow(response.data.result[0].date);
       }).catch((error) => { console.log(error); });
     },
   },

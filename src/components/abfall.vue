@@ -26,8 +26,8 @@ function daysFromNow(dateStr){
   const abfallDate = new Date(dateStr)
   var timeDiff = Math.abs(abfallDate.getTime() - Date.now());
   var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-  if (diffDays < 1) return 'heute'
-  else if (diffDays < 2) return 'morgen'
+  if (diffDays == 1) return 'heute'
+  else if (diffDays == 2) return 'morgen'
   else return `in ${diffDays} Tagen`
 }
 
@@ -46,7 +46,7 @@ export default {
   methods: {
     get_date(entity) {
       const today = new Date(Date.now());
-      ZhAbfallAPI.get(`/${entity}.json?zip=8046&start=${today.toISOString().substring(0,9)}&offset=0&limit=1`).then((response) => {
+      ZhAbfallAPI.get(`/${entity}.json?zip=8046&start=${today.toISOString().substring(0,10)}&sort=date&offset=0&limit=1`).then((response) => {
         this[entity] = daysFromNow(response.data.result[0].date);
       }).catch((error) => { console.log(error); });
     },

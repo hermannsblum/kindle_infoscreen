@@ -1,0 +1,41 @@
+{
+  "name": "hass_kindle_controller",
+  "version": "1.0.0",
+  "description": "Simple interface to home-assisstant sensors and switches for the kindle browser.",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --hot --inline",
+    "build": "webpack -p --config webpack.config.prod.js",
+    "lint": "eslint src/*.js ./*.js",
+    "lint-fix": "eslint --fix src/*.js ./*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:NotSpecial/webpack-babel-eslint.git"
+  },
+  "author": "Hermann Blum",
+  "dependencies": {
+    "es5-shim": "^4.5.14",
+    "html-webpack-plugin": "^3.2.0",
+    "json3": "^3.3.3",
+    "mithril": "1.1.7",
+    "webpack": "^3.11.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.11",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-import-resolver-webpack": "^0.9.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "file-loader": "^1.1.11",
+    "html-webpack-inline-source-plugin": "0.0.10",
+    "style-loader": "^0.19.1",
+    "webpack-dev-server": "^2.11.2"
+  }
+}

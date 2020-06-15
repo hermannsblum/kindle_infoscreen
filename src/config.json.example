@@ -1,0 +1,8 @@
+{
+  "token": "askjhdfkshdkf",
+  "wifi": "data:image/png;base64,<image data>",
+  "address": "http://hassio.local:8123",
+  "media_sources": {
+    "media_player.your_media_player": ["Source 1", "Source 3"]
+  }
+}

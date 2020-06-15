@@ -1,0 +1,7 @@
+- name: ESLint Action
+  uses: hallee/eslint-action@1.0.3
+  with:
+    # GitHub repository token for publishing inline lint annotations. Should be secrets.GITHUB_TOKEN.
+    repo-token: secrets.GITHUB_TOKEN
+    # Root directory to lint files in.
+    source-root: ./src

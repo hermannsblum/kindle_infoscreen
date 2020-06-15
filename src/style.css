@@ -1,0 +1,69 @@
+.switch-row {
+  height: 152px;
+  margin: 20px 0px 40px 0px;
+}
+.switch {
+  height: 140px;
+  width: 140px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  float: left;
+  border: 1px solid black;
+  margin: 0px 20px 0px 20px;
+  padding: 5px;
+}
+
+.sensor {
+  height: 40px;
+  line-height: 40px;
+  width: 530px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  margin: 0px 20px 0px 20px;
+  padding: 5px;
+}
+.sensorname {
+  float: left;
+}
+.sensorvalue {
+  text-align: right;
+}
+
+.media_player {
+  position: relative;
+  height: 160px;
+  width: 345px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  border: 1px solid black;
+  margin: 0px 20px 40px 20px;
+  padding: 5px 185px 5px 5px;
+}
+.media_player img {
+  height: 130px;
+  width: 130px;
+}
+.media_player_sources {
+  width: 180px;
+  height: 170px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+.media_player_sources div {
+  padding-left: 5px;
+}
+
+.overlaybutton {
+  margin: 20px;
+  padding: 5px;
+  height: 40px;
+  width: 140px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  border: 1px solid black;
+}
+
+.wifi {
+  margin: 20px;
+}

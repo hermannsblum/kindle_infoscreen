@@ -2,7 +2,7 @@
 
 ![NPM Build](https://github.com/hermannsblum/kindle_infoscreen/workflows/Node.js%20CI/badge.svg)
 
-<img height="30em" src="https://raw.githubusercontent.com/hermannsblum/kindle_infoscreen/master/example.jpg" />
+<img height="400em" src="https://raw.githubusercontent.com/hermannsblum/kindle_infoscreen/master/example.jpg" />
 
 # How to use
 
@@ -23,7 +23,7 @@ group:
 
 3. create a configuration file `src/config.json` for your kindle interface based on the [example config](https://github.com/hermannsblum/kindle_infoscreen/blob/master/src/config.json.example).
 
-```json
+```js
 // example config.json
 {
   "token": "askjhdfkshdkf", // your long lived access token

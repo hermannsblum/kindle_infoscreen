@@ -1,5 +1,5 @@
 import m from 'mithril';
-import { token, wifi, address, media_sources } from './config.json';
+import { token, wifi, address, media_sources, groupname } from './config.json';
 import './style.css';
 
 const errdiv = document.createElement('div');
@@ -20,9 +20,7 @@ var Entities = {
     }).then(function (result) {
       // document.getElementById('error').textContent = 'got result ...';
       // get entities of the watch group
-      var entities = result.filter(function (item) {
-        return item.entity_id == 'group.on_kindle';
-      })[0].attributes.entity_id;
+      var entities = result.filter(({ entity_id }) => entity_id === `group.${groupname}`)[0].attributes.entity_id;
       // get the states of these entities
       Entities.switches = [];
       entities

@@ -4,7 +4,13 @@
 
 <img height="400em" src="https://raw.githubusercontent.com/hermannsblum/kindle_infoscreen/master/example.jpg" />
 
-# How to use
+**What?**  
+Switch on and off devices, lights, or music in your house from a wall-mounted e-paper display.
+
+**Why?**  
+I had a kindle laying around and preferred an e-paper display without background light over a wall mounted tablet. However, even new kindles run a 2009ish chromeium browser that does not support modern javascript, also not the home-assistant UI.
+
+# How To
 
 1. create a long-lived access token to your home-assistant in your [account profile](https://www.home-assistant.io/docs/authentication/#your-account-profile). This token will be saved locally on your kindle and used to log into home-assistant.
 

@@ -54,8 +54,10 @@ npm run build
 cp dist/index.html /Volumes/Kindle/documents/index.html
 ```
 
-6. Detach the kindle from USB and open the 'Beta-Browser'. Make sure that javascript and images are enabled. Navigate to 'file:////mnt/us/documents/index.html'. Done.
+6. Detach the kindle from USB and open the 'Beta-Browser'. Make sure that javascript and images are enabled. Navigate to `file:////mnt/us/documents/index.html`. Done.
 The screen reloads every 10s and will update automatically when new entities are added to the specified group on home-assistant.
+
+7. Disable the kindle's screensaver such that the display stays on. For this, you need to go to the home screen and type `~ds` into the search bar. More info [here](https://wiki.mobileread.com/wiki/Kindle_Touch_Hacking#Search_Bar_Shortcuts).
 
 # Additional Options
 

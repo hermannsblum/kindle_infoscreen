@@ -8,7 +8,7 @@
 Switch on and off devices, lights, or music in your house from a wall-mounted e-paper display.
 
 **Why?**  
-I had a kindle laying around and preferred an e-paper display without background light over a wall mounted tablet. However, even new kindles run a 2009ish chromeium browser that does not support modern javascript, also not the home-assistant UI.
+I had a kindle laying around. However, even new kindles run a 2009ish chromeium browser that does not support modern javascript, also not the home-assistant UI.
 
 # How To
 
@@ -56,3 +56,33 @@ cp dist/index.html /Volumes/Kindle/documents/index.html
 
 6. Detach the kindle from USB and open the 'Beta-Browser'. Make sure that javascript and images are enabled. Navigate to 'file:////mnt/us/documents/index.html'. Done.
 The screen reloads every 10s and will update automatically when new entities are added to the specified group on home-assistant.
+
+# Additional Options
+
+## WiFi
+
+You can display a qr code to let people connect to your wifi. For this, [create a qr code](https://qifi.org/) and [convert it into a base64 string](https://www.base64-image.de/) (click 'copy image'). Then, add the string to the config: 
+
+```js
+// src/config.json
+{
+  ...
+  "wifi": "data:image/png;base64,...",
+  ...
+}
+```
+
+## Media Player Sources
+
+If you don't want to display all sources of a media player entity, only put those that you want into the config:
+
+```js
+// src/config.json
+{
+  ...
+  "media_sources": {
+    "media_player.your_media_player": ["Source 1", "Source 3"]  // optional, if you want to show only specific source options
+  }
+  ...
+}
+```

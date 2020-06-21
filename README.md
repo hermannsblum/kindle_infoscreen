@@ -26,8 +26,9 @@ group:
       - sensor.bedroom_temp
       - sensor.porch_temp
 ```
+3. clone the repository to a local computer that you can connect via USB to your kindle. Make sure that you have [node.js installed](https://nodejs.org/en/download/).
 
-3. create a configuration file `src/config.json` for your kindle interface based on the [example config](https://github.com/hermannsblum/kindle_infoscreen/blob/master/src/config.json.example).
+4. Within the cloned repository on your machine, create a configuration file `src/config.json` for your kindle interface based on the [example config](https://github.com/hermannsblum/kindle_infoscreen/blob/master/src/config.json.example).
 
 ```js
 // example config.json
@@ -42,22 +43,22 @@ group:
 }
 ```
 
-4. build the `index.html` file
+5. build the `index.html` file by running the following commands on your machine. This will create a single file `index.html` that needs to be copied to the kindle.
 ```bash
 npm install
 npm run build
 ```
 
-5. Copy the file to your kindle. Your kindle has to be connected via USB.
+6. Copy the file to your kindle. Your kindle has to be connected via USB.
 ```bash
 # example on Mac
 cp dist/index.html /Volumes/Kindle/documents/index.html
 ```
 
-6. Detach the kindle from USB and open the 'Beta-Browser'. Make sure that javascript and images are enabled. Navigate to `file:////mnt/us/documents/index.html`. Done.
+7. Detach the kindle from USB and open the 'Beta-Browser'. Make sure that javascript and images are enabled. Navigate to `file:////mnt/us/documents/index.html`. Done.
 The screen reloads every 10s and will update automatically when new entities are added to the specified group on home-assistant.
 
-7. Disable the kindle's screensaver such that the display stays on. For this, you need to go to the home screen and type `~ds` into the search bar. More info [here](https://wiki.mobileread.com/wiki/Kindle_Touch_Hacking#Search_Bar_Shortcuts).
+8. Disable the kindle's screensaver such that the display stays on. For this, you need to go to the home screen and type `~ds` into the search bar. More info [here](https://wiki.mobileread.com/wiki/Kindle_Touch_Hacking#Search_Bar_Shortcuts).
 
 # Additional Options
 

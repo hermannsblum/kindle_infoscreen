@@ -60,6 +60,16 @@ The screen reloads every 10s and will update automatically when new entities are
 
 8. Disable the kindle's screensaver such that the display stays on. For this, you need to go to the home screen and type `~ds` into the search bar. More info [here](https://wiki.mobileread.com/wiki/Kindle_Touch_Hacking#Search_Bar_Shortcuts).
 
+# Supported Devices
+
+Confirmed support was reported for: 
+
+- Kindle Paperwhite 3
+
+Missing support was reported for:
+
+- Kindle Paperwhite 1 (which [does not support the file url](https://www.mobileread.com/forums/showthread.php?t=24127), but could still access the interface when the `index.html` is hosted on a local webserver)
+
 # Additional Options
 
 ## WiFi

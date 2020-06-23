@@ -64,11 +64,7 @@ The screen reloads every 10s and will update automatically when new entities are
 
 Confirmed support was reported for: 
 
-- Kindle Paperwhite 3
-
-Missing support was reported for:
-
-- Kindle Paperwhite 1 (which [does not support the file url](https://www.mobileread.com/forums/showthread.php?t=24127), but could still access the interface when the `index.html` is hosted on a local webserver)
+- Kindle Paperwhite 1 & 3
 
 # Additional Options
 

@@ -1,5 +1,5 @@
 import m from 'mithril';
-import { token, wifi, address, media_sources, groupname } from './config.json';
+import { token, wifi, address, media_sources, groupname, refreshinterval } from './config.json';
 import './style.css';
 
 const errdiv = document.createElement('div');
@@ -226,4 +226,4 @@ var ListOfSwitches = {
 
 m.mount(container, ListOfSwitches);
 // repeatedly poll the state
-setInterval(Entities.loadEntities, 10000);
+setInterval(Entities.loadEntities, refreshinterval * 1000);

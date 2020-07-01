@@ -137,7 +137,7 @@ var Sensor = {
   view: function (vnode) {
     var attrs = vnode.attrs;
     var name = attrs.attributes.friendly_name || attrs.entity_id;
-    var unit = attrs.attributes.unit_of_measurement || ""
+    var unit = attrs.attributes.unit_of_measurement || '';
     return m('.sensor', [
       m('.sensorname', name),
       m('.sensorvalue', attrs.state + ' ' + unit),

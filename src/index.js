@@ -17,54 +17,37 @@ var Entities = {
     m.request({
       url: `${address}/api/states`,
       headers: { authorization: 'Bearer ' + token },
-    }).then(function (result) {
+    }).then((result) => {
       // document.getElementById('error').textContent = 'got result ...';
       // get entities of the watch group
-      var entities = result.filter(({ entity_id }) => entity_id === `group.${groupname}`)[0].attributes.entity_id;
+      var entities = result.filter(({ entity_id }) => entity_id === `group.${groupname}`)[0]
+        .attributes.entity_id;
       // get the states of these entities
       Entities.switches = [];
       entities
-        .filter(function (entity_id) {
-          return entity_id.startsWith('switch');
-        })
-        .forEach(function (entity_id) {
-          Entities.switches.push(
-            result.filter(function (item) {
-              return item.entity_id == entity_id;
-            })[0]
-          );
+        .filter((entity_id) => entity_id.startsWith('switch'))
+        .forEach((entity_id) => {
+          Entities.switches.push(result.filter((item) => item.entity_id === entity_id)[0]);
         });
       Entities.sensors = [];
       entities
-        .filter(function (entity_id) {
-          return entity_id.startsWith('sensor');
-        })
-        .forEach(function (entity_id) {
-          Entities.sensors.push(
-            result.filter(function (item) {
-              return item.entity_id == entity_id;
-            })[0]
-          );
+        .filter((entity_id) => entity_id.startsWith('sensor'))
+        .forEach((entity_id) => {
+          Entities.sensors.push(result.filter((item) => item.entity_id == entity_id)[0]);
         });
       Entities.media_players = [];
       entities
-        .filter(function (entity_id) {
-          return entity_id.startsWith('media_player');
-        })
-        .forEach(function (entity_id) {
-          Entities.media_players.push(
-            result.filter(function (item) {
-              return item.entity_id == entity_id;
-            })[0]
-          );
+        .filter((entity_id) => entity_id.startsWith('media_player'))
+        .forEach((entity_id) => {
+          Entities.media_players.push(result.filter((item) => item.entity_id == entity_id)[0]);
         });
       // document.getElementById('error').textContent = '';
     });
   },
 };
 
-var MediaPlayer = {
-  select_source: function (entity_id, source) {
+class MediaPlayer {
+  select_source(entity_id, source) {
     if (source === 'Off') {
       m.request({
         method: 'POST',
@@ -80,33 +63,30 @@ var MediaPlayer = {
         data: { entity_id: entity_id, source: source },
       });
     }
-  },
-  view: function (vnode) {
-    var attrs = vnode.attrs;
-    var name = attrs.attributes.friendly_name || attrs.entity_id;
-    name = attrs.attributes.media_title || name;
-    var style = {
-      'background-color': attrs.state == 'off' ? 'white' : 'black',
-      color: attrs.state == 'off' ? 'black' : 'white',
-    };
+  }
+  view({ attrs: { attributes, entity_id, state } }) {
+    var name = attributes.friendly_name || entity_id;
+    name = attributes.media_title || name;
     var source_list = ['Off'];
     // custom filter for now
-    if (media_sources && media_sources[attrs.entity_id]) {
-      source_list = source_list.concat(media_sources[attrs.entity_id]);
+    if (media_sources && media_sources[entity_id]) {
+      source_list = source_list.concat(media_sources[entity_id]);
     } else {
-      source_list = source_list.concat(attrs.attributes.source_list);
+      source_list = source_list.concat(attributes.source_list);
     }
     return m(
       '.media_player',
       {
-        style: style,
-        onclick: function () {},
+        style: {
+          'background-color': state == 'off' ? 'white' : 'black',
+          color: state == 'off' ? 'black' : 'white',
+        },
       },
       [
         m('div', name),
-        attrs.attributes.entity_picture &&
+        attributes.entity_picture &&
           m('img', {
-            src: address + attrs.attributes.entity_picture,
+            src: address + attributes.entity_picture,
           }),
         m(
           '.media_player_sources',
@@ -115,13 +95,13 @@ var MediaPlayer = {
               'div',
               {
                 style: {
-                  'background-color': attrs.attributes.source == source ? 'black' : 'white',
-                  color: attrs.attributes.source == source ? 'white' : 'black',
+                  'background-color': attributes.source == source ? 'black' : 'white',
+                  color: attributes.source == source ? 'white' : 'black',
                   height: 170 / source_list.length + 'px',
                   'line-height': 170 / source_list.length + 'px',
                 },
-                onclick: function () {
-                  MediaPlayer.select_source(attrs.entity_id, source);
+                onclick: () => {
+                  MediaPlayer.select_source(entity_id, source);
                 },
               },
               source
@@ -130,40 +110,38 @@ var MediaPlayer = {
         ),
       ]
     );
-  },
-};
+  }
+}
 
-var Sensor = {
-  view: function (vnode) {
-    var attrs = vnode.attrs;
-    var name = attrs.attributes.friendly_name || attrs.entity_id;
-    var unit = attrs.attributes.unit_of_measurement || '';
+class Sensor {
+  view({ attrs: { attributes, entity_id, state } }) {
+    var name = attributes.friendly_name || entity_id;
+    var unit = attributes.unit_of_measurement ? ` ${attributes.unit_of_measurement}` : '';
     return m('.sensor', [
       m('.sensorname', name),
-      m('.sensorvalue', attrs.state + ' ' + unit),
+      m('.sensorvalue', state + unit),
     ]);
-  },
-};
+  }
+}
 
 class Switch {
-  view({ attrs }) {
-    var name = attrs.attributes.friendly_name || attrs.entity_id;
-    var style = {
-      'background-color': attrs.state == 'on' ? 'black' : 'white',
-      color: attrs.state == 'on' ? 'white' : 'black',
-    };
+  view({ attrs: { attributes, entity_id, state } }) {
+    var name = attributes.friendly_name || entity_id;
     return m(
       '.switch',
       {
-        style: style,
+        style: {
+          'background-color': state == 'on' ? 'black' : 'white',
+          color: state == 'on' ? 'white' : 'black',
+        },
         onclick: () => {
           m.request({
             method: 'POST',
-            url: `${address}/api/services/switch/${attrs.state == 'on' ? 'turn_off' : 'turn_on'}`,
+            url: `${address}/api/services/switch/${state == 'on' ? 'turn_off' : 'turn_on'}`,
             headers: { authorization: 'Bearer ' + token },
-            data: { entity_id: attrs.entity_id },
+            data: { entity_id: entity_id },
           });
-          attrs.state = attrs.state == 'on' ? 'off' : 'on';
+          state = state == 'on' ? 'off' : 'on';
           m.redraw();
         },
       },
@@ -180,7 +158,7 @@ class Overlay {
     this.visible = !this.visible;
     m.redraw();
   }
-  view({ attrs, children }) {
+  view({ attrs: { label }, children }) {
     var style = {
       'background-color': this.visible ? 'black' : 'white',
       color: this.visible ? 'white' : 'black',
@@ -194,37 +172,33 @@ class Overlay {
             this.toggle();
           },
         },
-        `${this.visible ? 'hide' : 'show'}${attrs.label ? ' ' + attrs.label : ''}`
+        `${this.visible ? 'hide' : 'show'}${label ? ' ' + label : ''}`
       ),
       m('.overlay', { style: { display: this.visible ? 'block' : 'none' } }, children),
     ]);
   }
 }
 
-var ListOfSwitches = {
-  oninit: Entities.loadEntities,
+class Layout {
+  oninit() {
+    Entities.loadEntities();
+  }
   view() {
     return m('div', [
       m(
         '.div',
-        Entities.sensors.map(function (item) {
-          return m(Sensor, item);
-        })
+        Entities.sensors.map((sensorData) => m(Sensor, sensorData))
       ),
       m(
         '.switch-row',
-        Entities.switches.map(function (item) {
-          return m(Switch, item);
-        })
+        Entities.switches.map((switchData) => m(Switch, switchData))
       ),
-      ...Entities.media_players.map(function (item) {
-        return m(MediaPlayer, item);
-      }),
+      ...Entities.media_players.map((mediaPlayerData) => m(MediaPlayer, mediaPlayerData)),
       wifi ? m(Overlay, { label: 'wifi' }, m('img.wifi', { src: wifi })) : '',
     ]);
-  },
-};
+  }
+}
 
-m.mount(container, ListOfSwitches);
+m.mount(container, Layout);
 // repeatedly poll the state
 setInterval(Entities.loadEntities, refreshinterval * 1000);

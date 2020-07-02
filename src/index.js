@@ -116,9 +116,10 @@ class MediaPlayer {
 class Sensor {
   view({ attrs: { attributes, entity_id, state } }) {
     var name = attributes.friendly_name || entity_id;
+    var unit = attributes.unit_of_measurement ? ` ${attributes.unit_of_measurement}` : '';
     return m('.sensor', [
       m('.sensorname', name),
-      m('.sensorvalue', state + ' ' + attributes.unit_of_measurement),
+      m('.sensorvalue', state + unit),
     ]);
   }
 }

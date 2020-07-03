@@ -17,10 +17,10 @@
   "author": "Hermann Blum",
   "dependencies": {
     "es5-shim": "^4.5.14",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "3.2.0",
     "json3": "^3.3.3",
     "mithril": "1.1.7",
-    "webpack": "^3.11.0"
+    "webpack": "3.11.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

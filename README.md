@@ -4,10 +4,10 @@
 
 <img height="400em" src="https://raw.githubusercontent.com/hermannsblum/kindle_infoscreen/master/example.jpg" />
 
-**What?**  
+**What?**
 Switch on and off devices, lights, or music in your house from a wall-mounted e-paper display.
 
-**Why?**  
+**Why?**
 I had a kindle laying around. However, even new kindles run a 2009ish chromeium browser that does not support modern javascript, also not the home-assistant UI.
 
 # How To
@@ -45,7 +45,7 @@ group:
 
 5. build the `index.html` file by running the following commands on your machine. This will create a single file `index.html` that needs to be copied to the kindle.
 ```bash
-npm install
+npm ci
 npm run build
 ```
 
@@ -62,7 +62,7 @@ The screen reloads every 10s and will update automatically when new entities are
 
 # Supported Devices
 
-Confirmed support was reported for: 
+Confirmed support was reported for:
 
 - Kindle Paperwhite 1 & 3
 
@@ -70,7 +70,7 @@ Confirmed support was reported for:
 
 ## WiFi
 
-You can display a qr code to let people connect to your wifi. For this, [create a qr code](https://qifi.org/) and [convert it into a base64 string](https://www.base64-image.de/) (click 'copy image'). Then, add the string to the config: 
+You can display a qr code to let people connect to your wifi. For this, [create a qr code](https://qifi.org/) and [convert it into a base64 string](https://www.base64-image.de/) (click 'copy image'). Then, add the string to the config:
 
 ```js
 // src/config.json

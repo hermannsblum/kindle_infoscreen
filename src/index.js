@@ -10,6 +10,7 @@ document.body.appendChild(container);
 
 var Entities = {
   switches: [],
+  lights: [],
   sensors: [],
   media_players: [],
   loadEntities: function () {
@@ -28,6 +29,12 @@ var Entities = {
         .filter((entity_id) => entity_id.startsWith('switch'))
         .forEach((entity_id) => {
           Entities.switches.push(result.filter((item) => item.entity_id === entity_id)[0]);
+        });
+      Entities.lights = [];
+      entities
+        .filter((entity_id) => entity_id.startsWith('light'))
+        .forEach((entity_id) => {
+          Entities.lights.push(result.filter((item) => item.entity_id === entity_id)[0]);
         });
       Entities.sensors = [];
       entities
@@ -150,6 +157,32 @@ class Switch {
   }
 }
 
+class Light {
+  view({ attrs: { attributes, entity_id, state } }) {
+    var name = attributes.friendly_name || entity_id;
+    return m(
+      '.light',
+      {
+        style: {
+          'background-color': state == 'on' ? 'black' : 'white',
+          color: state == 'on' ? 'white' : 'black',
+        },
+        onclick: () => {
+          m.request({
+            method: 'POST',
+            url: `${address}/api/services/light/${state == 'on' ? 'turn_off' : 'turn_on'}`,
+            headers: { authorization: 'Bearer ' + token },
+            data: { entity_id: entity_id },
+          });
+          state = state == 'on' ? 'off' : 'on';
+          m.redraw();
+        },
+      },
+      name
+    );
+  }
+}
+
 class Overlay {
   constructor() {
     this.visible = false;
@@ -192,6 +225,10 @@ class Layout {
       m(
         '.switch-row',
         Entities.switches.map((switchData) => m(Switch, switchData))
+      ),
+      m(
+        '.light-row',
+        Entities.lights.map((lightData) => m(Light, lightData))
       ),
       ...Entities.media_players.map((mediaPlayerData) => m(MediaPlayer, mediaPlayerData)),
       wifi ? m(Overlay, { label: 'wifi' }, m('img.wifi', { src: wifi })) : '',

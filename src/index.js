@@ -11,6 +11,7 @@ document.body.appendChild(container);
 var Entities = {
   switches: [],
   lights: [],
+  scenes: [],
   sensors: [],
   media_players: [],
   loadEntities: function () {
@@ -35,6 +36,12 @@ var Entities = {
         .filter((entity_id) => entity_id.startsWith('light'))
         .forEach((entity_id) => {
           Entities.lights.push(result.filter((item) => item.entity_id === entity_id)[0]);
+        });
+      Entities.scenes = [];
+      entities
+        .filter((entity_id) => entity_id.startsWith('scene'))
+        .forEach((entity_id) => {
+          Entities.scenes.push(result.filter((item) => item.entity_id === entity_id)[0]);
         });
       Entities.sensors = [];
       entities
@@ -183,6 +190,31 @@ class Light {
   }
 }
 
+class Scene {
+  view({ attrs: { attributes, entity_id } }) {
+    var name = attributes.friendly_name || entity_id;
+    return m(
+      '.scene',
+      {
+        style: {
+          'background-color': 'white',
+          color: 'black',
+        },
+        onclick: () => {
+          m.request({
+            method: 'POST',
+            url: `${address}/api/services/scene/${'turn_on'}`,
+            headers: { authorization: 'Bearer ' + token },
+            data: { entity_id: entity_id },
+          });
+          m.redraw();
+        },
+      },
+      name
+    );
+  }
+}
+
 class Overlay {
   constructor() {
     this.visible = false;
@@ -229,6 +261,10 @@ class Layout {
       m(
         '.light-row',
         Entities.lights.map((lightData) => m(Light, lightData))
+      ),
+      m(
+        '.scene-row',
+        Entities.scenes.map((sceneData) => m(Scene, sceneData))
       ),
       ...Entities.media_players.map((mediaPlayerData) => m(MediaPlayer, mediaPlayerData)),
       wifi ? m(Overlay, { label: 'wifi' }, m('img.wifi', { src: wifi })) : '',

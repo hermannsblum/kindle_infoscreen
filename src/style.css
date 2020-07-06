@@ -1,6 +1,6 @@
 .switch-row {
-  height: 152px;
-  margin: 20px 0px 40px 0px;
+  overflow: auto;
+  width: 600px;
 }
 .switch {
   height: 140px;
@@ -9,37 +9,7 @@
   font-size: 20px;
   float: left;
   border: 1px solid black;
-  margin: 0px 20px 0px 20px;
-  padding: 5px;
-}
-
-.light-row {
-  height: 152px;
-  margin: 20px 0px 40px 0px;
-}
-.light {
-  height: 140px;
-  width: 140px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
-  float: left;
-  border: 1px solid black;
-  margin: 0px 20px 0px 20px;
-  padding: 5px;
-}
-
-.scene-row {
-  height: 152px;
-  margin: 20px 0px 40px 0px;
-}
-.scene {
-  height: 140px;
-  width: 140px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
-  float: left;
-  border: 1px solid black;
-  margin: 0px 20px 0px 20px;
+  margin: 20px;
   padding: 5px;
 }
 
@@ -66,7 +36,7 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   border: 1px solid black;
-  margin: 0px 20px 40px 20px;
+  margin: 20px 20px 40px 20px;
   padding: 5px 185px 5px 5px;
 }
 .media_player img {

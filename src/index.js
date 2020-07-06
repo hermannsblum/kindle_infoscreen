@@ -203,7 +203,7 @@ class Scene {
         onclick: () => {
           m.request({
             method: 'POST',
-            url: `${address}/api/services/scene/${'turn_on'}`,
+            url: `${address}/api/services/scene/turn_on`,
             headers: { authorization: 'Bearer ' + token },
             data: { entity_id: entity_id },
           });

@@ -10,6 +10,8 @@ document.body.appendChild(container);
 
 var Entities = {
   switches: [],
+  lights: [],
+  scenes: [],
   sensors: [],
   media_players: [],
   loadEntities: function () {
@@ -28,6 +30,18 @@ var Entities = {
         .filter((entity_id) => entity_id.startsWith('switch'))
         .forEach((entity_id) => {
           Entities.switches.push(result.filter((item) => item.entity_id === entity_id)[0]);
+        });
+      Entities.lights = [];
+      entities
+        .filter((entity_id) => entity_id.startsWith('light'))
+        .forEach((entity_id) => {
+          Entities.lights.push(result.filter((item) => item.entity_id === entity_id)[0]);
+        });
+      Entities.scenes = [];
+      entities
+        .filter((entity_id) => entity_id.startsWith('scene'))
+        .forEach((entity_id) => {
+          Entities.scenes.push(result.filter((item) => item.entity_id === entity_id)[0]);
         });
       Entities.sensors = [];
       entities
@@ -117,10 +131,7 @@ class Sensor {
   view({ attrs: { attributes, entity_id, state } }) {
     var name = attributes.friendly_name || entity_id;
     var unit = attributes.unit_of_measurement ? ` ${attributes.unit_of_measurement}` : '';
-    return m('.sensor', [
-      m('.sensorname', name),
-      m('.sensorvalue', state + unit),
-    ]);
+    return m('.sensor', [m('.sensorname', name), m('.sensorvalue', state + unit)]);
   }
 }
 
@@ -141,7 +152,62 @@ class Switch {
             headers: { authorization: 'Bearer ' + token },
             data: { entity_id: entity_id },
           });
-          state = state == 'on' ? 'off' : 'on';
+          Entities.switches.find((item) => item.entity_id === entity_id).state =
+            state == 'on' ? 'off' : 'on';
+          m.redraw();
+        },
+      },
+      name
+    );
+  }
+}
+
+class Light {
+  view({ attrs: { attributes, entity_id, state } }) {
+    var name = attributes.friendly_name || entity_id;
+    return m(
+      '.switch',
+      {
+        style: {
+          'background-color': state == 'on' ? 'black' : 'white',
+          color: state == 'on' ? 'white' : 'black',
+        },
+        onclick: () => {
+          m.request({
+            method: 'POST',
+            url: `${address}/api/services/light/${state == 'on' ? 'turn_off' : 'turn_on'}`,
+            headers: { authorization: 'Bearer ' + token },
+            data: { entity_id: entity_id },
+          });
+          Entities.lights.find((item) => item.entity_id === entity_id).state =
+            state == 'on' ? 'off' : 'on';
+          m.redraw();
+        },
+      },
+      name
+    );
+  }
+}
+
+class Scene {
+  view({ attrs: { attributes, entity_id, state = 'off' } }) {
+    var name = attributes.friendly_name || entity_id;
+    return m(
+      '.switch',
+      {
+        style: {
+          'background-color': state == 'on' ? 'black' : 'white',
+          color: state == 'on' ? 'white' : 'black',
+        },
+        onclick: () => {
+          m.request({
+            method: 'POST',
+            url: `${address}/api/services/scene/turn_on`,
+            headers: { authorization: 'Bearer ' + token },
+            data: { entity_id: entity_id },
+          });
+          // for feedback, turn switch on until next update
+          Entities.scenes.find((item) => item.entity_id === entity_id).state = 'on';
           m.redraw();
         },
       },
@@ -189,10 +255,11 @@ class Layout {
         '.div',
         Entities.sensors.map((sensorData) => m(Sensor, sensorData))
       ),
-      m(
-        '.switch-row',
-        Entities.switches.map((switchData) => m(Switch, switchData))
-      ),
+      m('.switch-row', [
+        ...Entities.switches.map((switchData) => m(Switch, switchData)),
+        ...Entities.lights.map((lightData) => m(Light, lightData)),
+        ...Entities.scenes.map((sceneData) => m(Scene, sceneData)),
+      ]),
       ...Entities.media_players.map((mediaPlayerData) => m(MediaPlayer, mediaPlayerData)),
       wifi ? m(Overlay, { label: 'wifi' }, m('img.wifi', { src: wifi })) : '',
     ]);

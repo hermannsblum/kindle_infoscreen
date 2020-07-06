@@ -14,7 +14,7 @@ I had a kindle laying around. However, even new kindles run a 2009ish chromeium 
 
 1. create a long-lived access token to your home-assistant in your [account profile](https://www.home-assistant.io/docs/authentication/#your-account-profile). This token will be saved locally on your kindle and used to log into home-assistant.
 
-2. create a [group of entities](https://www.home-assistant.io/integrations/group/) you want to display on the kindle. Currently supported are sensors, switches and media players.
+2. create a [group of entities](https://www.home-assistant.io/integrations/group/) you want to display on the kindle. Currently supported are sensors, switches, lights, scenes, and media players.
 
 ```yaml
 # Example configuration.yaml entry
